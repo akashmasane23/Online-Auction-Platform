@@ -1,56 +1,53 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Signin.css';
 
-function Signin() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const Signin = ({ setIsAuthenticated }) => {
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate();
 
-  const handleSignin = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
-
-    try {
-      const res = await axios.post('http://localhost:5001/signin', { username, password });
-      console.log('Signin Response:', res.data);
-
-      if (res.data.token) {
-        localStorage.setItem('authToken', res.data.token);
-        navigate('/dashboard'); // Redirect to dashboard
-      } else {
-        setError('Invalid credentials');
-      }
-    } catch (err) {
-      console.error('Signin Request Error:', err.response?.data || err.message);
-      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
-    }
+    // Simulate login
+    localStorage.setItem('authToken', 'dummyToken');
+    setIsAuthenticated(true);
+    navigate('/dashboard');
   };
 
   return (
-    <div className="form-container">
-      <h2>Signin</h2>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSignin}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Signin</button>
-      </form>
+    <div className="signin-container">
+      <div className="signin-form">
+        <h2>Welcome Back!</h2>
+        <p>Sign in to continue to your account.</p>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            />
+          </div>
+          <button type="submit" className="submit-button">Sign In</button>
+        </form>
+        <p className="signup-link">
+          Don't have an account? <a href="/signup">Sign Up</a>
+        </p>
+      </div>
     </div>
   );
-}
+};
 
 export default Signin;

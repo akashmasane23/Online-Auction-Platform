@@ -1,15 +1,17 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Landing.css';
 
-function Landing() 
-{
-return(<>
-<div className='content'>
-          <h2>Welcome to Auction App</h2>
-          <p>
-          An auction is usually a process of buying and selling goods or services by offering them up for bids, taking bids, and then selling the item to the highest bidder or buying the item from the lowest bidder. Some exceptions to this definition exist and are described in the section about different types.
-          </p>
-          </div>
-          </>
-)
-}
+const Landing = () => {
+  return (
+    <div className="landing">
+      <div className="hero">
+        <h1>Bid on the perfect items to fuel your online success.</h1>
+        <p>Discover unique items and place your bids today!</p>
+        <Link to="/signup" className="cta-button">Get Started</Link>
+      </div>
+    </div>
+  );
+};
 
-export default Landing
+export default Landing;

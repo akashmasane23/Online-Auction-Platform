@@ -1,59 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Dashboard.css';
 
-function Dashboard() {
-  const [items, setItems] = useState([]);
-  const nav = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      nav('/signin'); // Redirect to signin if not authenticated
-      return;
-    }
-
-    const fetchItems = async () => {
-      try {
-        const res = await axios.get('http://localhost:5001/auctions');
-        setItems(res.data);
-      } catch (error) {
-        console.error('Error fetching auctions:', error);
-      }
-    };
-    fetchItems();
-  }, []);
-
-  // 🔹 Handle Logout
-  // const handleLogout = () => {
-  //   localStorage.removeItem('authToken'); // Remove token
-  //   navigate('/signin'); // Redirect to Sign In page
-  // };
+const Dashboard = ({ isAuthenticated }) => {
+  const auctions = [
+    { id: 1, title: 'Vintage Watch', description: 'A rare vintage watch.', currentBid: 150, image: 'watch.jpg' },
+    { id: 2, title: 'Art Painting', description: 'A beautiful landscape painting.', currentBid: 300, image: 'painting.jpg' },
+  ];
 
   return (
-    <div>
-      <h2>Auction Dashboard</h2>
-
-      {/* 🔹 Logout Button 
-      <button onClick={handleLogout} style={{ marginLeft: '10px', background: 'red', color: 'white' }}>
-        Logout
-      </button>*/}
-
-      <Link to="/post-auction">
-        <button>Post New Auction</button>
-      </Link>
-
-      <ul>
-        {items.map((item) => (
-          <li key={item._id}>
-            <Link to={`/auction/${item._id}`}>
-              {item.itemName} - Current Bid: ${item.currentBid} {item.isClosed ? '(Closed)' : ''}
-            </Link>
-          </li>
+    <div className="dashboard-container">
+      <h2>Active Auctions</h2>
+      <div className="auctions-grid">
+        {auctions.map((auction) => (
+          <div key={auction.id} className="auction-card">
+            <img src={auction.image} alt={auction.title} className="auction-image" />
+            <div className="auction-details">
+              <h3>{auction.title}</h3>
+              <p>{auction.description}</p>
+              <p>Current Bid: ${auction.currentBid}</p>
+              <Link to={`/auction/${auction.id}`} className="bid-button">View Details</Link>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
-}
+};
 
 export default Dashboard;

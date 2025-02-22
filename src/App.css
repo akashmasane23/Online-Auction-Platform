@@ -1,159 +1,120 @@
-.content
-{
-  text-align: center;
-  /* background-color: lightblue; */
-}
-* {
-  box-sizing: border-box;
-}
-
+/* Global Styles */
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #eef2f3;
   margin: 0;
-  padding: 0;
-  color: #333;
+  font-family: Arial, sans-serif;
 }
 
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* App Container */
 .app {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-header {
-  background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
-  color: #fff;
-  padding: 15px 0;
-  text-align: center;
-  border-radius: 10px 10px 0 0;
-}
-
-h1 {
-  margin: 0;
-  font-size: 2.5rem;
-}
-
-h2 {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-  border-bottom: 2px solid #6a11cb;
-  padding-bottom: 5px;
-}
-
-.form-container {
-  background: #f9f9f9;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-form {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
-input,
-textarea {
-  margin: 10px 0;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  transition: border-color 0.3s;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #6a11cb;
-  outline: none;
-}
-
-button {
-  padding: 12px;
-  background: #6a11cb;
+/* Header Styles */
+header {
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Unique gradient color */
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s;
+  padding: 20px;
+  text-align: center;
+  position: relative; /* Required for absolute positioning of the toggle */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
 }
 
 nav {
-  margin: 15px 0;
-}
-
-.nav-link {
-  margin: 0 15px;
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.nav-link:hover {
-  color: #2575fc;
-}
-
-footer {
-  margin-top: 20px;
-  text-align: center;
-  color: #666;
-}
-
-button:hover {
-  background: #2575fc;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  background: #fff;
-  margin: 10px 0;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-li:hover {
-  transform: translateY(-2px);
-}
-
-li a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-}
-
-.message {
-  color: #d9534f; /* Bootstrap danger color */
-  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
   margin-top: 10px;
 }
 
-@media (max-width: 600px) {
-  .app {
-    margin: 10px;
-    padding: 15px;
-  }
-
-  header {
-    padding: 10px 0;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Hover effect */
+}
+
+.logout-button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #cc0000; /* Hover effect */
+}
+
+/* Dark Mode Toggle */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+  transition: opacity 0.3s ease;
+}
+
+.theme-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Footer Styles */
+footer {
+  background: linear-gradient(135deg, #2575fc, #6a11cb); /* Unique gradient color */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+/* Dark Mode Overrides */
+body.dark header {
+  background: linear-gradient(135deg, #4a148c, #1a237e); /* Dark mode gradient */
+}
+
+body.dark footer {
+  background: linear-gradient(135deg, #1a237e, #4a148c); /* Dark mode gradient */
+}
+
+body.dark nav .nav-link {
+  color: #ffffff;
+}
+
+body.dark .logout-button {
+  background-color: #ff4444;
+}

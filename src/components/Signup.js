@@ -1,59 +1,63 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Signup.css';
 
-function Signup() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const Signup = ({ setIsAuthenticated }) => {
+  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
-
-    if (!username || !password) {
-      setError('Username and password are required');
-      return;
-    }
-
-    try {
-      const res = await axios.post('http://localhost:5001/signup', {
-        username,
-        password
-      });
-
-      alert('Signup successful! Please sign in.');
-      navigate('/signin'); // Redirect to signin page
-    } catch (err) {
-      console.error('Signup Error:', err.response?.data || err.message);
-      setError(err.response?.data?.message || 'Signup failed. Please try again.');
-    }
+    // Simulate signup
+    localStorage.setItem('authToken', 'dummyToken');
+    setIsAuthenticated(true);
+    navigate('/dashboard');
   };
 
   return (
-    <div className="form-container">
-      <h2>Signup</h2>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSignup}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Signup</button>
-      </form>
+    <div className="signup-container">
+      <div className="signup-form">
+        <h2>Create Your Account</h2>
+        <p>Join us to start bidding on amazing items.</p>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="Enter your username"
+              value={formData.username}
+              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            />
+          </div>
+          <button type="submit" className="submit-button">Sign Up</button>
+        </form>
+        <p className="signin-link">
+          Already have an account? <a href="/signin">Sign In</a>
+        </p>
+      </div>
     </div>
   );
-}
+};
 
 export default Signup;
